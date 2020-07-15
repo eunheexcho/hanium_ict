@@ -2,7 +2,7 @@
 
 ## To do list
 ### 1. 기본 setting
-- [ ] Raspberry pi setting
+- [x] Raspberry pi setting
 - [ ] Git setting 및 repository 만들기
 
 ### 2. 구현기능: 소프트웨어
