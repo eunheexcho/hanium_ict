@@ -21,6 +21,7 @@
 - [ ] 3d printing tool 찾기
 - [ ] 3d printing tool 배우기
 - [ ] 3d printing tool 배운 후 도면 완성
+- [x] 부품 치수 측정 및 도면 치수 정하기
 #### 3-2. 하드웨어 2: 구현
 - [ ] 도면 완성 후 3d 프린터로 pretotype 제작
 
