@@ -3,7 +3,7 @@
 ## To do list
 ### 1. 기본 setting
 - [x] Raspberry pi setting
-- [ ] Git setting 및 repository 만들기
+- [x] Git setting 및 repository 만들기
 
 ### 2. 구현기능: 소프트웨어
 #### 2-1. 소프트웨어 1
@@ -18,7 +18,7 @@
 
 ### 3. 구현기능: 하드웨어
 #### 3-1. 하드웨어 1: 학습
-- [ ] 3d printing tool 찾기
+- [x] 3d printing tool 찾기
 - [ ] 3d printing tool 배우기
 - [ ] 3d printing tool 배운 후 도면 완성
 - [x] 부품 치수 측정 및 도면 치수 정하기
