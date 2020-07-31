@@ -1,3 +1,5 @@
+####### 스트립의 색깔분석
+
 import cv2
 import numpy as np
 from scipy.spatial import distance as dist
@@ -7,7 +9,7 @@ np.set_printoptions(threshold=sys.maxsize)
 
 
 # Contour 영역 내에 텍스트 쓰기
-# https://github.com/bsdnoobz/opencv-code/blob/master/shape-detect.cpp
+
 def setLabel(image, str, contour):
 
    fontface = cv2.FONT_HERSHEY_SIMPLEX
@@ -25,7 +27,7 @@ def setLabel(image, str, contour):
 
 
 
-# 컨투어 내부의 색을 평균내서 red, green, blue 중 어느 색인지 체크
+# 컨투어 내부의 색을 평균내서 어느 색인지 체크
 def label(image, contour):
 
 
@@ -71,6 +73,7 @@ lab = cv2.cvtColor(lab, cv2.COLOR_BGR2LAB)
 # 원본 이미지 불러오기
 image = cv2.imread("U10.png", 1)
 image = cv2.resize(image, dsize=(640, 480), interpolation=cv2.INTER_AREA)
+cv2.imshow("Original", image)
 
 blurred = cv2.GaussianBlur(image, (5, 5), 0)
 
@@ -101,24 +104,19 @@ elif len(contours) == 3:
 
 
 
-# contours = contours.astype("float")
-#
-# contours = contours.astype("int")
-
-
 
 
 contours=np.array(contours)
 
 
-
+# 컨투어의 x, y 좌표, width, height 구함
 x=contours[0][:,0][:,0].min()
 y=contours[0][:,0][:,1].min()
 w=contours[0][:,0][:,0].max()-contours[0][:,0][:,0].min()
 h=contours[0][:,0][:,1].max()-contours[0][:,0][:,1].min()
 
 
-# cropped = image[y:y+h, x:x+w]
+
 cropped=image[y: y + h, x: x + w]
 cv2.imwrite("U1313.png", cropped)
 cv2.imshow("image11111", cropped)

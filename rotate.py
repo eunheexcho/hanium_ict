@@ -1,3 +1,7 @@
+
+########## 좌우로 삐뚤어진 스트립을 벽과 평행하게 조정해주는 코드
+
+
 import cv2
 import numpy as np
 from scipy.spatial import distance as dist
@@ -9,7 +13,7 @@ def unit_vector(vector):
    """ Returns the unit vector of the vector.  """
    return vector / np.linalg.norm(vector)
 
-
+# 두 벡터의 각도를 구해줌
 def angle_between(v1, v2):
 
    v1_u = unit_vector(v1)
@@ -53,41 +57,24 @@ elif len(contours) == 3:
 
 
 
-# contours = contours.astype("float")
-#
-# contours = contours.astype("int")
-
-
-
-print(contours)
-
-
-for contour in contours:
-   x, y, w, h = cv2.boundingRect(contour)
-   print(x,y,w,h)
-
-# cropped = image[y:y+h, x:x+w]
-cropped=image[y: y + h, x: x + w]
-cv2.imwrite("U1313.png", cropped)
-cv2.imshow("image11111", cropped)
-
-height, width, channel = image.shape
 
 contours=np.array(contours)
-x=np.argmin(contours[0][:,0][:,0])
-y=np.argmin(contours[0][:,0][:,1])
-print(x)
-print(y)
+x=np.argmin(contours[0][:,0][:,0])  #contour중 x좌표가 최소인것의 좌표
+y=np.argmin(contours[0][:,0][:,1])  #contour중 y좌표가 최소인것의 좌표
+
+#편의를 위하여, 원점위치를 좌측 상단에서 좌측하단으로 옮김
+height, width, channel = image.shape
 xx=([0,height]-contours[0][:,0][x])*[-1,1]
 yy=([0,height]-contours[0][:,0][y])*[-1,1]
-print(xx)
-print(yy)
+
+# 두 좌표의 벡터차를 이용하여, 스트립과 x축 사이의 각도를 구함
 kk=yy-xx
 print(np.linalg.norm(kk,ord=1))
 Angle=angle_between(kk,[1,0])*180/np.pi
 
 print(Angle)
 
+# 스트립이 왼쪽으로 돌아갔는지, 오른쪽으로 돌아갔는지를 구분
 if (np.linalg.norm(kk,ord=1))<100:
    Angle=-Angle
 
