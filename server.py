@@ -13,4 +13,3 @@ while True:
 
     image_hub.send_reply(b'OK')
     cv2.imwrite('Test.jpg', image)
-    time.sleep(2.0)
