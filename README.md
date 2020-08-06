@@ -19,7 +19,7 @@
 ### 3. 구현기능: 하드웨어
 #### 3-1. 하드웨어 1: 학습
 - [x] 3d printing tool 찾기
-- [ ] 3d printing tool 배우기
+- [x] 3d printing tool 배우기
 - [ ] 3d printing tool 배운 후 도면 완성
 - [x] 부품 치수 측정 및 도면 치수 정하기
 #### 3-2. 하드웨어 2: 구현
@@ -36,6 +36,6 @@
 - [ ] 2차 prototype 완성 및 보완
 
 ### 6. 기타
-- [ ] Urine strip 구매
-- [ ] 제작에 필요한 재료 구매
+- [x] Urine strip 구매
+- [x] 제작에 필요한 재료 구매
 - [ ] 중간 보고서 작성
