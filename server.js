@@ -21,7 +21,7 @@ mysqlConnection.connect((err) => {
         console.log('Connection failed :(');
         return;
     }
-    console.log('Connected :)');
+    console.log('Connected!! :)');
 });
 
 app.use(bodyParser.json());

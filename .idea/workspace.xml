@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="5883ce81-45cc-4439-9f6b-fa65c89fe2bc" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/server.js" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/../hello-express/server.js" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/../hello-express/teamInfo.js" afterDir="false" />
@@ -38,7 +39,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1596730281461</updated>
-      <workItem from="1596730282681" duration="6578000" />
+      <workItem from="1596730282681" duration="7039000" />
     </task>
     <servers />
   </component>
