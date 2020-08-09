@@ -12,4 +12,4 @@ while True:
         break
 
     image_hub.send_reply(b'OK')
-    cv2.imwrite('Test.jpg', image)
+    cv2.imwrite('left.jpg', image)
