@@ -27,7 +27,7 @@ mysqlConnection.connect((err) => {
 app.use(bodyParser.json());
 
 app.get('/', function (req, res) {
-    mysqlConnection.query("SELECT * from patientinfo", (err, rows, field) => {
+    mysqlConnection.query("SELECT * from patient_info", (err, rows, field) => {
         if (!err) {
             res.send(rows)
         } else {
@@ -37,7 +37,7 @@ app.get('/', function (req, res) {
 });
 
 app.get('/patientinfo/:id', function (req, res) {
-    mysqlConnection.query("SELECT * from patientinfo WHERE rowid = ?", [req.params.id], (err, row) => {
+    mysqlConnection.query("SELECT * from patient_info WHERE rowid = ?", [req.params.id], (err, row) => {
         if (!err) {
             res.json(row)
         } else {
@@ -47,7 +47,7 @@ app.get('/patientinfo/:id', function (req, res) {
 });
 
 app.get('/urineinfo/:id', function (req, res) {
-    mysqlConnection.query("SELECT urineinfo_id from patientinfo", (err, rows, field) => {
+    mysqlConnection.query("SELECT u_info_id from patient_info", (err, rows, field) => {
         if (!err) {
             res.send(err)
         } else {
@@ -57,8 +57,8 @@ app.get('/urineinfo/:id', function (req, res) {
 });
 
 app.post('/patientinfo', function (req, res) {
-    mysqlConnection.query("INSERT INTO patientinfo VALUES (?, ?, ?, ?, ?)",
-        [req.body.name, req.body.patientnum, req.body.age, req.body.sex, req.body.medicalDiagnosis], (err) => {
+    mysqlConnection.query("INSERT INTO patient_info VALUES (?, ?, ?, ?, ?)",
+        [req.body.name, req.body.patientnum, req.body.age, req.body.sex, req.body.meddx], (err) => {
             if (!err) {
                 res.send()
             } else {

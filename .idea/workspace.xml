@@ -2,14 +2,15 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="5883ce81-45cc-4439-9f6b-fa65c89fe2bc" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/server.js" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/../hello-express/server.js" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/../hello-express/teamInfo.js" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/../hello-node/server.js" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/../node-sample/server.js" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/../prismagram-app/README.md" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/../quotes-api/server.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server.js" beforeDir="false" afterPath="$PROJECT_DIR$/server.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -17,7 +18,7 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="ProjectId" id="1fjT0l9t56vNRHzlmsgBENjeo0M" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
@@ -39,7 +40,14 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1596730281461</updated>
-      <workItem from="1596730282681" duration="7039000" />
+      <workItem from="1596730282681" duration="7574000" />
+      <workItem from="1596745248550" duration="214000" />
+      <workItem from="1596781054080" duration="508000" />
+      <workItem from="1596781973205" duration="1863000" />
+      <workItem from="1596794558261" duration="2552000" />
+      <workItem from="1596810495978" duration="600000" />
+      <workItem from="1596895496294" duration="910000" />
+      <workItem from="1596960658447" duration="619000" />
     </task>
     <servers />
   </component>
