@@ -2,10 +2,6 @@ import Express from "express";
 import Mysql from "mysql";
 import bodyParser from "body-parser";
 
-// const express = require("express");
-// const mysql = require("mysql");
-// const bodyParser = require("body-parser")
-
 const app = Express();
 
 const mysqlConnection = Mysql.createConnection({

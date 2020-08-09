@@ -8,7 +8,6 @@
       <change afterPath="$PROJECT_DIR$/../node-sample/server.js" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/../prismagram-app/README.md" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/../quotes-api/server.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server.js" beforeDir="false" afterPath="$PROJECT_DIR$/server.js" afterDir="false" />
     </list>
@@ -47,7 +46,7 @@
       <workItem from="1596794558261" duration="2552000" />
       <workItem from="1596810495978" duration="600000" />
       <workItem from="1596895496294" duration="910000" />
-      <workItem from="1596960658447" duration="619000" />
+      <workItem from="1596960658447" duration="1803000" />
     </task>
     <servers />
   </component>
