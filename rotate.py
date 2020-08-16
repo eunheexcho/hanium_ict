@@ -25,7 +25,8 @@ np.set_printoptions(threshold=sys.maxsize)
 
 
 # 원본 이미지 불러오기
-image = cv2.imread("U2222.png", 1)
+image = cv2.imread("glucose_14cm.jpg", 1)
+image = cv2.medianBlur(image,5)
 cv2.imshow("Original", image)
 
 blurred = cv2.GaussianBlur(image, (5, 5), 0)
@@ -33,7 +34,7 @@ blurred = cv2.GaussianBlur(image, (5, 5), 0)
 
 # 이진화
 gray = cv2.cvtColor(blurred, cv2.COLOR_BGR2GRAY)
-ret, thresh = cv2.threshold(gray, 70, 255, cv2.THRESH_BINARY)
+ret, thresh = cv2.threshold(gray, 100, 255, cv2.THRESH_BINARY)
 
 
 cv2.imshow('gray',gray)
@@ -54,7 +55,7 @@ if len(contours) == 2:
 
 elif len(contours) == 3:
    contours = contours[1]
-
+print(contours)
 
 
 
@@ -71,20 +72,58 @@ yy=([0,height]-contours[0][:,0][y])*[-1,1]
 kk=yy-xx
 print(np.linalg.norm(kk,ord=1))
 Angle=angle_between(kk,[1,0])*180/np.pi
+print(kk)
 
 print(Angle)
 
+x_min=[]
+x_max=[]
+y_min=[]
+y_max=[]
+
+for k in range(0,len(contours)):
+    x_min.append(contours[k][:,0][:,0].min())
+    x_max.append(contours[k][:,0][:,0].max())
+    y_min.append(contours[k][:,0][:,1].min())
+    y_max.append(contours[k][:,0][:,1].max())
+
+c_x=np.argmin(x_min)
+c_y=np.argmin(y_min)
+
+c_xx=np.argmin(contours[c_x][:,0][:,0])
+c_yy=np.argmin(contours[c_y][:,0][:,1])
+
+xx=([0,height]-contours[c_x][:,0][c_xx])*[-1,1]
+yy=([0,height]-contours[c_y][:,0][c_yy])*[-1,1]
+kk=yy-xx
+print(np.linalg.norm(kk,ord=1))
+Angle=angle_between(kk,[1,0])*180/np.pi
+print(kk)
+
+x_min=np.array(x_min)
+x_max=np.array(x_max)
+y_min=np.array(y_min)
+y_max=np.array(y_max)
+
+x_min=x_min.min()
+y_min=y_min.min()
+x_max=x_max.max()
+y_max=y_max.max()
+w=x_max.max()-x_min.min()
+h=y_max.max()-y_min.min()
+
 # 스트립이 왼쪽으로 돌아갔는지, 오른쪽으로 돌아갔는지를 구분
-if (np.linalg.norm(kk,ord=1))<100:
+if (np.linalg.norm(kk,ord=1))<5:
    Angle=-Angle
 
 else:
-   Angle=90-Angle
+   Angle=(90-Angle)
 
 
-matrix = cv2.getRotationMatrix2D((width/2, height/2), Angle, 0.8)
+matrix = cv2.getRotationMatrix2D(((x_min+x_max)/2, (y_min+y_max)/2), Angle, 0.8)
 rotated = cv2.warpAffine(image, matrix, (width, height))
 
+cv2.imwrite('rotated.png',rotated)
 cv2.imshow("rotated", rotated)
 cv2.waitKey(0)
 cv2.destroyAllWindows()
