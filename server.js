@@ -1,14 +1,17 @@
 import Express from "express";
 import Mysql from "mysql";
 import bodyParser from "body-parser";
+import helmet from "helmet";
 
 const app = Express();
+
+app.use(helmet());
 
 const mysqlConnection = Mysql.createConnection({
     host: "localhost",
     user: "root",
-    password: "password",
-    database: "acuous", // change the name
+    password: "******",
+    database: "******",
     multipleStatements: true
 });
 
@@ -23,7 +26,7 @@ mysqlConnection.connect((err) => {
 app.use(bodyParser.json());
 
 app.get('/', function (req, res) {
-    mysqlConnection.query("SELECT * from patient_info", (err, rows, field) => {
+    mysqlConnection.query("SELECT * from patient_info", (err, rows) => {
         if (!err) {
             res.send(rows)
         } else {
@@ -33,9 +36,9 @@ app.get('/', function (req, res) {
 });
 
 app.get('/patientinfo/:id', function (req, res) {
-    mysqlConnection.query("SELECT * from patient_info WHERE rowid = ?", [req.params.id], (err, row) => {
+    mysqlConnection.query("SELECT * from patient_info WHERE id = ?", [req.params.id], (err, rows) => {
         if (!err) {
-            res.json(row)
+            res.json(rows)
         } else {
             console.log(err);
         }
@@ -43,9 +46,9 @@ app.get('/patientinfo/:id', function (req, res) {
 });
 
 app.get('/urineinfo/:id', function (req, res) {
-    mysqlConnection.query("SELECT u_info_id from patient_info", (err, rows, field) => {
+    mysqlConnection.query("SELECT * from u_info WHERE id =?", [req.params.id], (err, rows) => {
         if (!err) {
-            res.send(err)
+            res.send(rows)
         } else {
             console.log(err);
         }
