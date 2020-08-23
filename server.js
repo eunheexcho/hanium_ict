@@ -2,26 +2,11 @@ import Express from "express";
 import Mysql from "mysql";
 import bodyParser from "body-parser";
 import helmet from "helmet";
+import mysqlConnection from "./db.js";
 
 const app = Express();
 
 app.use(helmet());
-
-const mysqlConnection = Mysql.createConnection({
-    host: "localhost",
-    user: "root",
-    password: "******",
-    database: "******",
-    multipleStatements: true
-});
-
-mysqlConnection.connect((err) => {
-    if (err) {
-        console.log('Connection failed :(');
-        return;
-    }
-    console.log('Connected!! :)');
-});
 
 app.use(bodyParser.json());
 
