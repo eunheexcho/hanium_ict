@@ -7,7 +7,7 @@ import numpy as np
 from scipy.spatial import distance as dist
 import sys
 import math
-
+import matplotlib.pyplot as plt
 
 def unit_vector(vector):
    """ Returns the unit vector of the vector.  """
@@ -25,7 +25,7 @@ np.set_printoptions(threshold=sys.maxsize)
 
 
 # 원본 이미지 불러오기
-image = cv2.imread("original.jpg", 1)
+image = cv2.imread("Mangsa.png", 1)
 image=cv2.resize(image, dsize=(0, 0), fx=0.3, fy=0.3, interpolation=cv2.INTER_LINEAR)
 image = cv2.medianBlur(image,5)
 cv2.imshow("Original", image)
@@ -58,73 +58,100 @@ elif len(contours) == 3:
    contours = contours[1]
 print(contours)
 
+###########################################################################################
+contours = sorted(contours, key=cv2.contourArea, reverse=True)[:1]
 
+# Lets create two images, initially all zeros (i.e. black)
+# One image will be filled with 'Blue' wherever we think there's some starfish
+# The other image will be filled with 'Green' whereever we think there's not some starfish
+h, w, num_c = image.shape
+segmask = np.zeros((h, w, num_c), np.uint8)
+stencil = np.zeros((h, w, num_c), np.uint8)
 
-contours=np.array(contours)
-x=np.argmin(contours[0][:,0][:,0])  #contour중 x좌표가 최소인것의 좌표
-y=np.argmin(contours[0][:,0][:,1])  #contour중 y좌표가 최소인것의 좌표
+# I know we've only one contour, but - in general - we'd expect to have more contours to deal with
+for c in contours:
+    # Fill in the starfish shape into segmask
+    cv2.drawContours(segmask, [c], 0, (255, 0, 0), -1)
+    # Lets fill in the starfish shape into stencil as well
+    # and then re-arrange the colors using numpy
+    cv2.drawContours(stencil, [c], 0, (255, 0, 0), -1)
+    stencil[np.where((stencil==[0,0,0]).all(axis=2))] = [0, 255, 0]
+    stencil[np.where((stencil==[255,0,0]).all(axis=2))] = [0, 0, 0]
 
-#편의를 위하여, 원점위치를 좌측 상단에서 좌측하단으로 옮김
-height, width, channel = image.shape
-xx=([0,height]-contours[0][:,0][x])*[-1,1]
-yy=([0,height]-contours[0][:,0][y])*[-1,1]
+# Now, lets create a mask image by bitwise ORring segmask and stencil together
+mask = cv2.bitwise_or(stencil, segmask)
 
-# 두 좌표의 벡터차를 이용하여, 스트립과 x축 사이의 각도를 구함
-kk=yy-xx
-print(np.linalg.norm(kk,ord=1))
-Angle=angle_between(kk,[1,0])*180/np.pi
-print(kk)
+cv2.imshow("Final", cv2.cvtColor(mask, cv2.COLOR_BGR2RGB))
 
-print(Angle)
-
-x_min=[]
-x_max=[]
-y_min=[]
-y_max=[]
-
-for k in range(0,len(contours)):
-    x_min.append(contours[k][:,0][:,0].min())
-    x_max.append(contours[k][:,0][:,0].max())
-    y_min.append(contours[k][:,0][:,1].min())
-    y_max.append(contours[k][:,0][:,1].max())
-
-c_x=np.argmin(x_min)
-c_y=np.argmin(y_min)
-
-c_xx=np.argmin(contours[c_x][:,0][:,0])
-c_yy=np.argmin(contours[c_y][:,0][:,1])
-
-xx=([0,height]-contours[c_x][:,0][c_xx])*[-1,1]
-yy=([0,height]-contours[c_y][:,0][c_yy])*[-1,1]
-kk=yy-xx
-print(np.linalg.norm(kk,ord=1))
-Angle=angle_between(kk,[1,0])*180/np.pi
-print(kk)
-
-x_min=np.array(x_min)
-x_max=np.array(x_max)
-y_min=np.array(y_min)
-y_max=np.array(y_max)
-
-x_min=x_min.min()
-y_min=y_min.min()
-x_max=x_max.max()
-y_max=y_max.max()
-w=x_max.max()-x_min.min()
-h=y_max.max()-y_min.min()
-
-# 스트립이 왼쪽으로 돌아갔는지, 오른쪽으로 돌아갔는지를 구분
-if (np.linalg.norm(kk,ord=1))<5:
-   Angle=-Angle
-
-else:
-   Angle=(90-Angle)
-
-
-matrix = cv2.getRotationMatrix2D(((x_min+x_max)/2, (y_min+y_max)/2), Angle, 1)
-rotated = cv2.warpAffine(image, matrix, (width, height))
-
-cv2.imwrite('rotated_original.png',rotated)
-cv2.imshow("rotated", rotated)
 cv2.waitKey(0)
 cv2.destroyAllWindows()
+
+#
+# contours=np.array(contours)
+# x=np.argmin(contours[0][:,0][:,0])  #contour중 x좌표가 최소인것의 좌표
+# y=np.argmin(contours[0][:,0][:,1])  #contour중 y좌표가 최소인것의 좌표
+#
+# #편의를 위하여, 원점위치를 좌측 상단에서 좌측하단으로 옮김
+# height, width, channel = image.shape
+# xx=([0,height]-contours[0][:,0][x])*[-1,1]
+# yy=([0,height]-contours[0][:,0][y])*[-1,1]
+#
+# # 두 좌표의 벡터차를 이용하여, 스트립과 x축 사이의 각도를 구함
+# kk=yy-xx
+# print(np.linalg.norm(kk,ord=1))
+# Angle=angle_between(kk,[1,0])*180/np.pi
+# print(kk)
+#
+# print(Angle)
+#
+# x_min=[]
+# x_max=[]
+# y_min=[]
+# y_max=[]
+#
+# for k in range(0,len(contours)):
+#     x_min.append(contours[k][:,0][:,0].min())
+#     x_max.append(contours[k][:,0][:,0].max())
+#     y_min.append(contours[k][:,0][:,1].min())
+#     y_max.append(contours[k][:,0][:,1].max())
+#
+# c_x=np.argmin(x_min)
+# c_y=np.argmin(y_min)
+#
+# c_xx=np.argmin(contours[c_x][:,0][:,0])
+# c_yy=np.argmin(contours[c_y][:,0][:,1])
+#
+# xx=([0,height]-contours[c_x][:,0][c_xx])*[-1,1]
+# yy=([0,height]-contours[c_y][:,0][c_yy])*[-1,1]
+# kk=yy-xx
+# print(np.linalg.norm(kk,ord=1))
+# Angle=angle_between(kk,[1,0])*180/np.pi
+# print(kk)
+#
+# x_min=np.array(x_min)
+# x_max=np.array(x_max)
+# y_min=np.array(y_min)
+# y_max=np.array(y_max)
+#
+# x_min=x_min.min()
+# y_min=y_min.min()
+# x_max=x_max.max()
+# y_max=y_max.max()
+# w=x_max.max()-x_min.min()
+# h=y_max.max()-y_min.min()
+#
+# # 스트립이 왼쪽으로 돌아갔는지, 오른쪽으로 돌아갔는지를 구분
+# if (np.linalg.norm(kk,ord=1))<5:
+#    Angle=-Angle
+#
+# else:
+#    Angle=(90-Angle)
+#
+#
+# matrix = cv2.getRotationMatrix2D(((x_min+x_max)/2, (y_min+y_max)/2), Angle, 1)
+# rotated = cv2.warpAffine(image, matrix, (width, height))
+#
+# cv2.imwrite('rotated_original.png',rotated)
+# cv2.imshow("rotated", rotated)
+# cv2.waitKey(0)
+# cv2.destroyAllWindows()
