@@ -25,7 +25,8 @@ np.set_printoptions(threshold=sys.maxsize)
 
 
 # 원본 이미지 불러오기
-image = cv2.imread("glucose_14cm.jpg", 1)
+image = cv2.imread("original.jpg", 1)
+image=cv2.resize(image, dsize=(0, 0), fx=0.3, fy=0.3, interpolation=cv2.INTER_LINEAR)
 image = cv2.medianBlur(image,5)
 cv2.imshow("Original", image)
 
@@ -120,10 +121,10 @@ else:
    Angle=(90-Angle)
 
 
-matrix = cv2.getRotationMatrix2D(((x_min+x_max)/2, (y_min+y_max)/2), Angle, 0.8)
+matrix = cv2.getRotationMatrix2D(((x_min+x_max)/2, (y_min+y_max)/2), Angle, 1)
 rotated = cv2.warpAffine(image, matrix, (width, height))
 
-cv2.imwrite('rotated.png',rotated)
+cv2.imwrite('rotated_original.png',rotated)
 cv2.imshow("rotated", rotated)
 cv2.waitKey(0)
 cv2.destroyAllWindows()
