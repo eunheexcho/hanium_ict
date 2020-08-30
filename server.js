@@ -1,5 +1,4 @@
 import Express from "express";
-import Mysql from "mysql";
 import bodyParser from "body-parser";
 import helmet from "helmet";
 import mysqlConnection from "./db.js";
@@ -11,7 +10,7 @@ app.use(helmet());
 app.use(bodyParser.json());
 
 app.get('/', function (req, res) {
-    mysqlConnection.query("SELECT * from patient_info", (err, rows) => {
+    mysqlConnection.query("SELECT * from patients", (err, rows) => {
         if (!err) {
             res.send(rows)
         } else {
@@ -21,7 +20,7 @@ app.get('/', function (req, res) {
 });
 
 app.get('/patientinfo/:id', function (req, res) {
-    mysqlConnection.query("SELECT * from patient_info WHERE id = ?", [req.params.id], (err, rows) => {
+    mysqlConnection.query("SELECT * from patients WHERE id = ?", [req.params.id], (err, rows) => {
         if (!err) {
             res.json(rows)
         } else {
@@ -41,8 +40,8 @@ app.get('/urineinfo/:id', function (req, res) {
 });
 
 app.post('/patientinfo', function (req, res) {
-    mysqlConnection.query("INSERT INTO patient_info VALUES (?, ?, ?, ?, ?)",
-        [req.body.name, req.body.patientnum, req.body.age, req.body.sex, req.body.meddx], (err) => {
+    mysqlConnection.query("INSERT INTO patients VALUES (?, ?, ?, ?, ?)",
+        [req.body.name, req.body.patient_number, req.body.age, req.body.sex, req.body.medical_diagnosis], (err) => {
             if (!err) {
                 res.send()
             } else {
