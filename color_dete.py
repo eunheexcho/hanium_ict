@@ -80,6 +80,7 @@ colors = [[255,255,255],[0,0,0],[88,194,225],[170,198,215],[77,190,210],[177,163
 colorNames = ['white','black','1-1','2-1','3-1','4-1','5-1',
               '4-2','5-2','6-2','7-2',
               '1-3','2-3','3-3','4-3','5-3','6-3','7-3',
+              
               '1-4','2-4','3-4','4-4','5-4','6-4','7-4',
               '1-5','2-5,3-5','4-5','5-5','6-5','7-5',
               '3-6','5-6','6-6']
@@ -97,9 +98,9 @@ lab = cv2.cvtColor(lab, cv2.COLOR_BGR2LAB)
 
 
 # 원본 이미지 불러오기
-image = cv2.imread("rotated.png", 1)
+image = cv2.imread("rotated_original.png", 1)
 
-cv2.imshow("glucose_14cm.png", image)
+#cv2.imshow("glucose_14cm.png", image)
 
 blurred = cv2.GaussianBlur(image, (5, 5), 0)
 
@@ -109,17 +110,17 @@ gray = cv2.cvtColor(blurred, cv2.COLOR_BGR2GRAY)
 ret, thresh = cv2.threshold(gray, 70, 255, cv2.THRESH_BINARY)
 
 
-cv2.imshow('gray',gray)
+#cv2.imshow('gray',gray)
 # 색검출할 색공간으로 LAB사용
 img_lab = cv2.cvtColor(blurred, cv2.COLOR_BGR2LAB)
 
 thresh = cv2.erode(thresh, None, iterations=2)
-cv2.imshow("Thresh", thresh)
+#cv2.imshow("Thresh", thresh)
 
 
 # 컨투어 검출
 contours = cv2.findContours(thresh.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
-print(len(contours))
+
 
 # 컨투어 리스트가 OpenCV 버전에 따라 차이있기 때문에 추가
 if len(contours) == 2:
@@ -158,7 +159,6 @@ y=y_min.min()
 w=x_max.max()-x_min.min()
 h=y_max.max()-y_min.min()
 
-print(h)
 
 
 cropped=image[y: y + h, x: x + w]
@@ -168,7 +168,9 @@ cropped=image[y: y + h, x: x + w]
 
 
 cv2.imwrite("U1313.png", cropped)
-cv2.imshow("image11111", cropped)
+cv2.imshow("Cropped Image", cropped)
+
+
 ##################################################################################################################################
 image = cv2.imread("U1313.png", 1)
 blurred = cv2.GaussianBlur(image, (5, 5), 0)
@@ -177,151 +179,19 @@ h, w, c = image.shape
 
 
 
-print(image.shape)
 
-# # 이진화
-# gray = cv2.cvtColor(blurred, cv2.COLOR_BGR2GRAY)
-#
-# ret, thresh = cv2.threshold(gray, 100, 255, cv2.THRESH_BINARY)
-# thresh = cv2.erode(thresh, None, iterations=2)
-# cv2.imshow("black_detect",thresh)
-#
-# top=thresh[0:int(h/2),0:w]
-# print(thresh)
-#
-# bottom=thresh[int(h/2):h,0:w]
-#
-#
-#
-#
-#
-#
-# print(np.mean(top))
-# print(np.mean(bottom))
-#
-# if np.mean(top)>np.mean(bottom):
-#     Angle=0
-# else:
-#     Angle=180
-#
-# matrix = cv2.getRotationMatrix2D((w/2, h/2), Angle, 1)
-# image = cv2.warpAffine(image, matrix, (w, h))
-#
-# blurred = cv2.GaussianBlur(image, (5, 5), 0)
-#
-# gray = cv2.cvtColor(blurred, cv2.COLOR_BGR2GRAY)
-#
-#
-# ret, thresh = cv2.threshold(gray, 70, 255, cv2.THRESH_BINARY)
-# thresh = cv2.erode(thresh, None, iterations=2)
-#
-# contours = cv2.findContours(thresh.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
-# print(len(contours))
-#
-# # 컨투어 리스트가 OpenCV 버전에 따라 차이있기 때문에 추가
-# if len(contours) == 2:
-#    contours = contours[0]
-#
-# elif len(contours) == 3:
-#    contours = contours[1]
-#
-#
-#
-#
-#
-# contours=np.array(contours)
-#
-#
-#
-# # 컨투어의 x, y 좌표, width, height 구함
-# x_min=[]
-# x_max=[]
-# y_min=[]
-# y_max=[]
-#
-# for k in range(0,len(contours)):
-#     x_min.append(contours[k][:,0][:,0].min())
-#     x_max.append(contours[k][:,0][:,0].max())
-#     y_min.append(contours[k][:,0][:,1].min())
-#     y_max.append(contours[k][:,0][:,1].max())
-#
-# x_min=np.array(x_min)
-# x_max=np.array(x_max)
-# y_min=np.array(y_min)
-# y_max=np.array(y_max)
-#
-# x=x_min.min()
-# y=y_min.min()
-# w=x_max.max()-x_min.min()
-# h=y_max.max()-y_min.min()
-#
-# blurred=blurred[y: y + h, x: x + w]
-#
-#
-# cv2.imshow("after black", blurred)
+
+
 
 first=blurred[round(0.6*w):round(1.4*w), round(0.2*w):round(0.8*w)]
 
 cv2.imshow('first',first)
-print(first.shape)
+
 # cv2.imshow('gray',gray)
 
 
 
-# # 색검출할 색공간으로 LAB사용
-# img_lab = cv2.cvtColor(blurred, cv2.COLOR_BGR2LAB)
-#
-#
-# thresh = cv2.erode(thresh, None, iterations=2)
-# cv2.imshow("Thresh", thresh)
-#
-#
-# # 컨투어 검출
-# contours = cv2.findContours(thresh.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
-# print(len(contours))
-#
-# # 컨투어 리스트가 OpenCV 버전에 따라 차이있기 때문에 추가
-# if len(contours) == 2:
-#    contours = contours[0]
-#
-# elif len(contours) == 3:
-#    contours = contours[1]
 
-# 컨투어 별로 체크
-# for contour in contours:
-#
-#       cv2.imshow("Image", image)
-#       cv2.waitKey(0)
-#
-#       # 컨투어를 그림
-#       cv2.drawContours(image, [contour], -1, (0, 255, 0), 2)
-#
-#
-#       # 컨투어 내부에 검출된 색을 표시
-#       color_text = label(img_lab, contour)
-#       setLabel(image, color_text, contour)
-#       print(color_text)
-
-# thresh = cv2.erode(thresh, None, iterations=2)
-# cv2.imshow("Thresh", thresh)
-#
-#
-# # 컨투어 검출
-# blurred = cv2.GaussianBlur(first, (5, 5), 0)
-# gray = cv2.cvtColor(blurred, cv2.COLOR_BGR2GRAY)
-# ret, thresh = cv2.threshold(gray, 100, 255, cv2.THRESH_BINARY)
-#
-#
-#
-# cv2.imshow('gray',gray)
-#
-# thr = cv2.resize(thresh, dsize=(640, 480), interpolation=cv2.INTER_AREA)
-# cv2.imshow('thr',thresh)
-# contours = cv2.findContours(thresh.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
-# print(len(contours))
-# print(contours)
-
-# 컨투어 리스트가 OpenCV 버전에 따라 차이있기 때문에 추가
 
 
 contours=[
@@ -347,7 +217,7 @@ first_color_name=['white','black','1-1','1-3','1-4','1-5']
 
 first = cv2.cvtColor(first, cv2.COLOR_BGR2HSV)
 first_color_text= label(first,contours,first_color,first_color_name)
-print(first_color_text)
+
 
 # second
 second_color=[[255,255,255],[0,0,0],[170,198,215],[192,208,225],[74,122,186],[78,119,204]]
@@ -364,7 +234,7 @@ second = cv2.cvtColor(second, cv2.COLOR_BGR2HSV)
 
 
 second_color_text= label(second,contours,second_color_hsv,second_color_name)
-print(second_color_text)
+
 
 #############Third####################
 third_color=[[255,255,255],[0,0,0],[195,201,214],[186,208,226],[90,137,205],[78,119,204],[75,102,222]]
@@ -381,7 +251,7 @@ third = cv2.cvtColor(third, cv2.COLOR_BGR2HSV)
 
 
 third_color_text= label(third,contours,third_color_hsv,third_color_name)
-print(third_color_text)
+
 
 ##############Fourth####################
 fourth_color=[[255,255,255],[0,0,0],[195,201,214],[179,200,232],[168,180,222],[37,45,134],[45,44,110]]
@@ -398,7 +268,7 @@ fourth = cv2.cvtColor(fourth, cv2.COLOR_BGR2HSV)
 
 
 fourth_color_text= label(fourth,contours,fourth_color_hsv,fourth_color_name)
-print(fourth_color_text)
+
 
 
 ############Fifth#################33
@@ -416,7 +286,7 @@ fifth = cv2.cvtColor(fifth, cv2.COLOR_BGR2HSV)
 
 
 fifth_color_text= label(fifth,contours,fifth_color_hsv,fifth_color_name)
-print(fifth_color_text)
+
 
 
 
@@ -436,7 +306,7 @@ sixth = cv2.cvtColor(sixth, cv2.COLOR_BGR2HSV)
 
 
 sixth_color_text= label(sixth,contours,sixth_color_hsv,sixth_color_name)
-print(sixth_color_text)
+
 
 
 ##############seventh######################
@@ -456,7 +326,7 @@ seventh = cv2.cvtColor(seventh, cv2.COLOR_BGR2HSV)
 
 
 seventh_color_text= label(seventh,contours,seventh_color_hsv,seventh_color_name)
-print(seventh_color_text)
+
 
 Result_color=np.array([first_color_text,second_color_text,third_color_text,fourth_color_text,fifth_color_text,sixth_color_text,seventh_color_text])
 Result=[Health_detect(first_color_text),Health_detect(seventh_color_text),Health_detect(third_color_text)
@@ -467,7 +337,7 @@ print(Result)
 
 
 
-cv2.imshow("Image", image)
+
 cv2.waitKey(0)
 
 
