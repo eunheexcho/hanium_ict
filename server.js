@@ -30,7 +30,7 @@ app.get('/patientinfo/:id', function (req, res) {
 });
 
 app.get('/urineinfo/:id', function (req, res) {
-    mysqlConnection.query("SELECT * from u_info WHERE id =?", [req.params.id], (err, rows) => {
+    mysqlConnection.query("SELECT * from urine_information WHERE id =?", [req.params.id], (err, rows) => {
         if (!err) {
             res.send(rows)
         } else {
@@ -39,8 +39,18 @@ app.get('/urineinfo/:id', function (req, res) {
     })
 });
 
+// app.get('/alysisinfo', function (req, res) {
+//     mysqlConnection.query("SELECT * from urinalysis_information WHERE id =?"), [req.parans.id], (err, rows) => {
+//         if(!err) {
+//             res.send(rows)
+//         } else {
+//             console.log(err);
+//         }
+//     }
+// });
+
 app.post('/patientinfo', function (req, res) {
-    mysqlConnection.query("INSERT INTO patients VALUES (?, ?, ?, ?, ?)",
+    mysqlConnection.query("INSERT INTO patients VALUES (?, ?, ?, ?, ?, ?)",
         [req.body.name, req.body.patient_number, req.body.age, req.body.sex, req.body.medical_diagnosis], (err) => {
             if (!err) {
                 res.send()
